@@ -11,7 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { Link } from "react-router-dom";
+import { Link } from "./Link";
 
 const pages = [
   { title: "Home", route: "/" },
@@ -20,7 +20,7 @@ const pages = [
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout", "Login"];
 
-const NavBar = () => {
+const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -85,8 +85,13 @@ const NavBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <Link to={page.route}>
+              {pages.map((page, i) => (
+                <Link
+                  key={i}
+                  href={page.route}
+                  className="animated-underline text-xs font-semibold"
+                  openNewTab={true}
+                >
                   <MenuItem key={page.route} onClick={handleCloseNavMenu}>
                     <Typography fontWeight={600} textAlign="center">
                       {page.title}
@@ -105,8 +110,13 @@ const NavBar = () => {
             FutTube
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Link to={page.route}>
+            {pages.map((page, i) => (
+              <Link
+                key={i}
+                href={page.route}
+                className="animated-underline text-xs font-semibold"
+                openNewTab={true}
+              >
                 <Button
                   key={page.route}
                   onClick={handleCloseNavMenu}
@@ -157,4 +167,4 @@ const NavBar = () => {
     </AppBar>
   );
 };
-export default NavBar;
+export default Navbar;
