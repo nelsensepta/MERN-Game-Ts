@@ -1,29 +1,10 @@
-import { Container, Grid, Typography, TextField, Button } from "@mui/material";
-import React, { MouseEvent, useEffect, useState } from "react";
-import { useNavigate, useParams, useRoutes } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "@/store";
-import {
-  createGame,
-  deleteGame,
-  filterGame,
-  getGameById,
-  updateGame,
-} from "@/store/slices/GameSlice";
+import { Button, Container, Grid, TextField, Typography } from "@mui/material";
+import { MouseEvent, useState } from "react";
+import { useAppDispatch } from "../../store";
+import { createGame } from "../../store/slices/GameSlice";
 
-export default function UpdateGame() {
+export default function CreateGame() {
   const dispatch = useAppDispatch();
-  const { singleGame } = useAppSelector((state) => state.games);
-  const { id } = useParams();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(getGameById(id!));
-  }, []);
-
-  useEffect(() => {
-    setGameInitialState();
-  }, [singleGame]);
-
   const [game, setGame] = useState({
     name: "",
     address: "",
@@ -33,22 +14,9 @@ export default function UpdateGame() {
     fieldNumber: "",
   });
 
-  const setGameInitialState = () => {
-    if (!singleGame) return; // if null, return
-    setGame({
-      name: singleGame?.name,
-      address: singleGame?.address,
-      numberOfPeople: singleGame?.numberOfPeople.toString()!,
-      date: singleGame?.date.toString(),
-      time: singleGame?.time,
-      fieldNumber: singleGame?.fieldNumber.toString()!,
-    });
-  };
-
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     let data = {
-      _id: id,
       name: game.name,
       address: game.address,
       numberOfPeople: parseInt(game.numberOfPeople),
@@ -56,22 +24,22 @@ export default function UpdateGame() {
       date: game.date,
       fieldNumber: parseInt(game.fieldNumber),
     };
-    dispatch(updateGame(data));
-  };
-
-  const handleDelete = (e: MouseEvent<HTMLButtonElement>) => {
-    if (!id) return;
-    dispatch(deleteGame(id));
-    // filterGame(id);
-    navigate("/");
+    dispatch(createGame(data));
+    setGame({
+      name: "",
+      address: "",
+      numberOfPeople: "",
+      date: "",
+      time: "",
+      fieldNumber: "",
+    });
   };
 
   return (
     <Container sx={{ marginTop: 10 }}>
       <Grid sx={{ margin: "0 auto" }}>
         <Typography sx={{ marginBottom: 2 }} variant="h4" fontWeight={600}>
-          {game.name} - {game.address} - {game.time} -{" "}
-          {game.date?.substring(0, 10).replaceAll("-", "/")}
+          Create Game
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -106,18 +74,12 @@ export default function UpdateGame() {
 
           <Grid item xs={12}>
             <TextField
-              defaultValue={game.date}
               InputLabelProps={{ shrink: true }}
               onChange={(e) => setGame({ ...game, date: e.target.value })}
               type="date"
               value={game.date}
               fullWidth
-              label={`Current Date:     ${game.date
-                .substring(0, 10)
-                .replaceAll("-", "/")
-                .split("/")
-                .reverse()
-                .join("/")}`}
+              label="date"
             />
           </Grid>
 
@@ -149,19 +111,7 @@ export default function UpdateGame() {
               variant="contained"
               disableElevation
             >
-              Update
-            </Button>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Button
-              onClick={handleDelete}
-              sx={{ backgroundColor: "#ff5544" }}
-              fullWidth
-              variant="contained"
-              disableElevation
-            >
-              Delete
+              Create
             </Button>
           </Grid>
         </Grid>

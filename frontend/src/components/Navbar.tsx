@@ -11,10 +11,10 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { Link } from "./Link";
+import { Link } from "react-router-dom";
 
 const pages = [
-  { title: "Home", route: "/" },
+  { title: "Home", route: "/games" },
   { title: "Games", route: "/games" },
   { title: "Add Game", route: "/games/create" },
 ];
@@ -86,12 +86,7 @@ const Navbar = () => {
               }}
             >
               {pages.map((page, i) => (
-                <Link
-                  key={i}
-                  href={page.route}
-                  className="animated-underline text-xs font-semibold"
-                  openNewTab={false}
-                >
+                <Link to={page.route} key={i}>
                   <MenuItem key={page.route} onClick={handleCloseNavMenu}>
                     <Typography fontWeight={600} textAlign="center">
                       {page.title}
@@ -111,12 +106,7 @@ const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page, i) => (
-              <Link
-                key={i}
-                href={page.route}
-                className="animated-underline text-xs font-semibold"
-                openNewTab={false}
-              >
+              <Link to={page.route} key={i}>
                 <Button
                   key={page.route}
                   onClick={handleCloseNavMenu}

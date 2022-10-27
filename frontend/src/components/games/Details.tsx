@@ -1,9 +1,8 @@
 import { Button, Container, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
-import { Link } from "@/components/Link";
-// import { Link, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { getGameById } from "@/store/slices/GameSlice";
+import { Link, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { getGameById } from "../../store/slices/GameSlice";
 
 export default function SingleGamePage() {
   const dispatch = useAppDispatch();

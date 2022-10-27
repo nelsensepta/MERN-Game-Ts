@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Game } from "../../interface/Game";
+import { Game } from "../../interfaces/Game";
 
 interface GameState {
   games: Game[] | null;
@@ -21,9 +21,8 @@ export const getGames = createAsyncThunk<Game[]>(
   "games/getGames",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/games`
-      );
+      const response = await axios.get(`${process.env.API_URL}/api/games`);
+      console.log(response);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -36,7 +35,7 @@ export const getGameById = createAsyncThunk<Game, string>(
   async (id, thunkAPI) => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/games/game/${id}`
+        `${process.env.API_URL}/api/games/game/${id}`
       );
       return response.data;
     } catch (error) {
@@ -50,7 +49,7 @@ export const createGame = createAsyncThunk<Game, Object>(
   async (data, thunkAPI) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/games/game`,
+        `${process.env.API_URL}/api/games/game`,
         data
       );
       thunkAPI.dispatch(getGames());
@@ -66,7 +65,7 @@ export const updateGame = createAsyncThunk<Game, Object | any>(
   async (data, thunkAPI) => {
     try {
       const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/games/game/${data._id}`,
+        `${process.env.API_URL}/api/games/game/${data._id}`,
         data
       );
       return response.data;
@@ -81,7 +80,7 @@ export const deleteGame = createAsyncThunk<string, string>(
   async (id, thunkAPI) => {
     try {
       const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/games/game/${id}`
+        `${process.env.API_URL}/api/games/game/${id}`
       );
       thunkAPI.dispatch(getGames());
       return response.data;

@@ -1,11 +1,10 @@
 import { Container, Grid } from "@mui/material";
-import { height } from "@mui/system";
-import { Link } from "@/components/Link";
-import { useAppSelector } from "@/store";
+// import { height } from "@mui/system";
+import { Link } from "react-router-dom";
+import { useAppSelector } from "../../store";
 
 export default function GamesPage() {
   const { games } = useAppSelector((state) => state.games);
-  console.log(games);
 
   return (
     <Container>
@@ -13,7 +12,7 @@ export default function GamesPage() {
         {games &&
           games.map((game) => (
             <Grid item key={game._id} xs={4}>
-              <Link href={`/game/${game._id}`}>
+              <Link to={`/game/${game._id}`}>
                 <Grid
                   sx={{
                     borderRadius: 2,
