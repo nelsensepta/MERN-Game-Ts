@@ -10,7 +10,7 @@ export type TLink = {
 } & React.ComponentPropsWithoutRef<"a"> &
   LinkProps;
 
-export const Link = React.forwardRef<HTMLAnchorElement, TLink>(
+const Link = React.forwardRef<HTMLAnchorElement, TLink>(
   ({ children, href, openNewTab, className, ...props }, ref): JSX.Element => {
     const isNewTab: boolean = openNewTab
       ? openNewTab
@@ -44,3 +44,6 @@ export const Link = React.forwardRef<HTMLAnchorElement, TLink>(
     );
   }
 );
+Link.displayName = "Link";
+
+export { Link };
