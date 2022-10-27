@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { getGameById } from "../../store/slices/GameSlice";
 
-export default function SingleGamePage() {
+export default function DetailsGame() {
   const dispatch = useAppDispatch();
   const { singleGame } = useAppSelector((state) => state.games);
   const { id } = useParams();
@@ -44,7 +44,7 @@ export default function SingleGamePage() {
           <Typography variant="h6">{singleGame?.time}</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Link to={`/editgame/${singleGame?._id}`}>
+          <Link to={`/games/edit/${singleGame?._id}`}>
             <Button variant="contained" disableElevation>
               Edit
             </Button>

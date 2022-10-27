@@ -1,5 +1,5 @@
 import { Container, Grid, Typography, TextField, Button } from "@mui/material";
-import React, { MouseEvent, useEffect, useState } from "react";
+import React, { MouseEvent, useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store";
 import {
@@ -14,24 +14,7 @@ export default function EditGame() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(getGameById(id!));
-  }, []);
-
-  useEffect(() => {
-    setGameInitialState();
-  }, [singleGame]);
-
-  const [game, setGame] = useState({
-    name: "",
-    address: "",
-    numberOfPeople: "",
-    date: "",
-    time: "",
-    fieldNumber: "",
-  });
-
-  const setGameInitialState = () => {
+  const setGameInitialState = useCallback(() => {
     if (!singleGame) return; // if null, return
     setGame({
       name: singleGame?.name,
@@ -41,7 +24,23 @@ export default function EditGame() {
       time: singleGame?.time,
       fieldNumber: singleGame?.fieldNumber.toString()!,
     });
-  };
+  }, [singleGame]);
+  useEffect(() => {
+    dispatch(getGameById(id!));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    setGameInitialState();
+  }, [singleGame, setGameInitialState]);
+
+  const [game, setGame] = useState({
+    name: "",
+    address: "",
+    numberOfPeople: "",
+    date: "",
+    time: "",
+    fieldNumber: "",
+  });
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -64,12 +63,16 @@ export default function EditGame() {
     navigate("/");
   };
 
+  const convertDate = (date: string) => {
+    return date.substring(0, 10).replaceAll("-", "/");
+  };
+
+  console.log(game.date);
   return (
     <Container sx={{ marginTop: 10 }}>
       <Grid sx={{ margin: "0 auto" }}>
         <Typography sx={{ marginBottom: 2 }} variant="h4" fontWeight={600}>
-          {game.name} - {game.address} - {game.time} -{" "}
-          {game.date?.substring(0, 10).replaceAll("-", "/")}
+          {game.name} - {game.address} - {game.time} - {convertDate(game.date)}
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -104,18 +107,14 @@ export default function EditGame() {
 
           <Grid item xs={12}>
             <TextField
-              defaultValue={game.date}
+              // defaultValue={convertDate(game.date)}
               InputLabelProps={{ shrink: true }}
               onChange={(e) => setGame({ ...game, date: e.target.value })}
               type="date"
               value={game.date}
+              // placeholder={convertDate(game.date)}
               fullWidth
-              label={`Current Date:     ${game.date
-                .substring(0, 10)
-                .replaceAll("-", "/")
-                .split("/")
-                .reverse()
-                .join("/")}`}
+              label={`Current Date:     ${convertDate(game.date)}`}
             />
           </Grid>
 

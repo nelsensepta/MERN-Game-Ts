@@ -3,7 +3,7 @@ import { Container, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../store";
 
-export default function GamesPage() {
+export default function Games() {
   const { games } = useAppSelector((state) => state.games);
 
   return (
@@ -12,7 +12,7 @@ export default function GamesPage() {
         {games &&
           games.map((game) => (
             <Grid item key={game._id} xs={4}>
-              <Link to={`/game/${game._id}`}>
+              <Link to={`/games/${game._id}`}>
                 <Grid
                   sx={{
                     borderRadius: 2,

@@ -21,8 +21,9 @@ export const getGames = createAsyncThunk<Game[]>(
   "games/getGames",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get(`${process.env.API_URL}/api/games`);
-      console.log(response);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/games`
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -35,7 +36,7 @@ export const getGameById = createAsyncThunk<Game, string>(
   async (id, thunkAPI) => {
     try {
       const response = await axios.get(
-        `${process.env.API_URL}/api/games/game/${id}`
+        `${process.env.REACT_APP_API_URL}/api/games/game/${id}`
       );
       return response.data;
     } catch (error) {
@@ -49,7 +50,7 @@ export const createGame = createAsyncThunk<Game, Object>(
   async (data, thunkAPI) => {
     try {
       const response = await axios.post(
-        `${process.env.API_URL}/api/games/game`,
+        `${process.env.REACT_APP_API_URL}/api/games/game`,
         data
       );
       thunkAPI.dispatch(getGames());
@@ -65,7 +66,7 @@ export const updateGame = createAsyncThunk<Game, Object | any>(
   async (data, thunkAPI) => {
     try {
       const response = await axios.put(
-        `${process.env.API_URL}/api/games/game/${data._id}`,
+        `${process.env.REACT_APP_API_URL}/api/games/game/${data._id}`,
         data
       );
       return response.data;
@@ -80,7 +81,7 @@ export const deleteGame = createAsyncThunk<string, string>(
   async (id, thunkAPI) => {
     try {
       const response = await axios.delete(
-        `${process.env.API_URL}/api/games/game/${id}`
+        `${process.env.REACT_APP_API_URL}/api/games/game/${id}`
       );
       thunkAPI.dispatch(getGames());
       return response.data;
@@ -99,7 +100,7 @@ export const gameSlice = createSlice({
       state.games = action.payload;
     },
     filterGame: (state, action) => {
-      state.games = state.games?.filter((game) => game._id != action.payload)!;
+      state.games = state.games?.filter((game) => game._id !== action.payload)!;
     },
   },
   extraReducers: (builder) => {
@@ -125,8 +126,8 @@ export const gameSlice = createSlice({
       state.singleGame = action.payload;
     });
     // builder.addCase(deleteGame.fulfilled, (state, action) => {
-    //     state.message
-    // })
+    //   state.message;
+    // });
   },
 });
 
