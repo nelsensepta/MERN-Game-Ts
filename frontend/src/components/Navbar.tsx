@@ -16,7 +16,7 @@ import { Link } from "./Link";
 const pages = [
   { title: "Home", route: "/" },
   { title: "Games", route: "/games" },
-  { title: "Add Game", route: "/createGame" },
+  { title: "Add Game", route: "/games/create" },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout", "Login"];
 
@@ -90,7 +90,7 @@ const Navbar = () => {
                   key={i}
                   href={page.route}
                   className="animated-underline text-xs font-semibold"
-                  openNewTab={true}
+                  openNewTab={false}
                 >
                   <MenuItem key={page.route} onClick={handleCloseNavMenu}>
                     <Typography fontWeight={600} textAlign="center">
@@ -115,7 +115,7 @@ const Navbar = () => {
                 key={i}
                 href={page.route}
                 className="animated-underline text-xs font-semibold"
-                openNewTab={true}
+                openNewTab={false}
               >
                 <Button
                   key={page.route}

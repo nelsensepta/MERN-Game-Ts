@@ -22,7 +22,7 @@ const Home: NextPage = () => {
     initApp();
   }, [initApp]);
   console.log(initApp);
-  return <Navbar />;
+  return <p>ok</p>;
 };
 
 export default Home;

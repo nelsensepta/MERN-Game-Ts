@@ -1,7 +1,7 @@
 import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 import React, { MouseEvent, useState } from "react";
 import { Game } from "../../interface/Game";
-import { useAppDispatch } from "../../store/";
+import { useAppDispatch } from "../../store";
 import { createGame } from "../../store/slices/GameSlice";
 
 export default function CreateGamePage() {

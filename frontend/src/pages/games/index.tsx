@@ -5,6 +5,7 @@ import { useAppSelector } from "@/store";
 
 export default function GamesPage() {
   const { games } = useAppSelector((state) => state.games);
+  console.log(games);
 
   return (
     <Container>
